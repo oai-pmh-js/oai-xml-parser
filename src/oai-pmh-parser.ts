@@ -12,6 +12,13 @@ export class OaiPmhParser implements IOaiPmhParser {
   };
   private readonly xmlParser: XMLParser;
 
+  /**
+   * @param parserOptions Options for [XMLParser](https://github.com/NaturalIntelligence/fast-xml-parser).
+   * It's possible that parserOptions will break
+   * the methods of this class. If you need options that
+   * do break current methods, either extend this class or do your
+   * own implementation of the interface from the [core package](https://github.com/oai-pmh-js/oai-pmh).
+   */
   constructor(parserOptions?: X2jOptionsOptional) {
     if (parserOptions) this.parserOptions = parserOptions;
     this.xmlParser = new XMLParser(this.parserOptions);
