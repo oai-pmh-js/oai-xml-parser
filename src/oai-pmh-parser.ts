@@ -1,5 +1,6 @@
 import { XMLParser } from 'fast-xml-parser';
 import { IOaiPmhParser, OaiPmhError } from '@oai-pmh-js/oai-pmh';
+import { VerbsAndFields } from '@oai-pmh-js/oai-pmh/dist/type/general';
 
 export class OaiPmhParser implements IOaiPmhParser {
   private readonly xmlParser = new XMLParser({
@@ -43,7 +44,11 @@ export class OaiPmhParser implements IOaiPmhParser {
     return obj.GetRecord.record;
   }
 
-  public *ParseList(obj: any, verb: string, field: string) {
+  public *ParseList<T extends keyof VerbsAndFields>(
+    obj: any,
+    verb: T,
+    field: VerbsAndFields[T],
+  ) {
     if (obj[verb])
       for (const item of Array.isArray(obj[verb][field])
         ? obj[verb][field]
