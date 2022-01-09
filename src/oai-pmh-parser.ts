@@ -1,15 +1,21 @@
-import { XMLParser } from 'fast-xml-parser';
+import { X2jOptionsOptional, XMLParser } from 'fast-xml-parser';
 import { IOaiPmhParser, OaiPmhError } from '@oai-pmh-js/oai-pmh';
 import { VerbsAndFields } from '@oai-pmh-js/oai-pmh/dist/type/general';
 
 export class OaiPmhParser implements IOaiPmhParser {
-  private readonly xmlParser = new XMLParser({
+  private readonly parserOptions: X2jOptionsOptional = {
     ignoreAttributes: false,
     parseAttributeValue: false,
     trimValues: false,
     processEntities: true,
     parseTagValue: false,
-  });
+  };
+  private readonly xmlParser: XMLParser;
+
+  constructor(parserOptions?: X2jOptionsOptional) {
+    if (parserOptions) this.parserOptions = parserOptions;
+    this.xmlParser = new XMLParser(this.parserOptions);
+  }
 
   public GetResumptionToken(result: any) {
     const token: string = result.resumptionToken['#text'];
