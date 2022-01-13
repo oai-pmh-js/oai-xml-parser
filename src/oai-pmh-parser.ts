@@ -6,7 +6,7 @@ export class OaiPmhParser implements IOaiPmhParser {
   private readonly parserOptions: X2jOptionsOptional = {
     ignoreAttributes: false,
     parseAttributeValue: false,
-    trimValues: false,
+    trimValues: true,
     processEntities: true,
     parseTagValue: false,
   };
