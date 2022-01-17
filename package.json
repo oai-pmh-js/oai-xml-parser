@@ -1,6 +1,6 @@
 {
   "name": "@oai-pmh-js/oai-xml-parser",
-  "version": "0.1.6",
+  "version": "0.1.9",
   "description": "",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

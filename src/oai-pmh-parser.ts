@@ -24,9 +24,8 @@ export class OaiPmhParser implements IOaiPmhParser {
     this.xmlParser = new XMLParser(this.parserOptions);
   }
 
-  public GetResumptionToken(result: any) {
-    const token: string = result.resumptionToken['#text'];
-    return token ?? null;
+  public GetResumptionToken(result: any): string | null {
+    return result.resumptionToken?.['#text'] ?? result.resumptionToken ?? null;
   }
 
   public ParseOaiPmhXml(xml: string) {
@@ -37,9 +36,9 @@ export class OaiPmhParser implements IOaiPmhParser {
     if (oaiPmh.error)
       throw new OaiPmhError(
         `OAI-PMH provider returned an error: ${
-          oaiPmh.error['#text']
-            ? oaiPmh.error['#text'] + ' | ' + oaiPmh.error['@_code']
-            : oaiPmh.error['@_code']
+          oaiPmh.error?.['#text']
+            ? oaiPmh.error?.['#text'] + ' | ' + oaiPmh.error?.['@_code']
+            : oaiPmh.error?.['@_code']
         }`,
       );
     return oaiPmh;
@@ -63,9 +62,9 @@ export class OaiPmhParser implements IOaiPmhParser {
     field: VerbsAndFields[T],
   ) {
     if (obj[verb])
-      for (const item of Array.isArray(obj[verb][field])
+      for (const item of Array.isArray(obj[verb]?.[field])
         ? obj[verb][field]
-        : [obj[verb][field]])
+        : [obj[verb]?.[field]])
         yield item;
   }
 }
