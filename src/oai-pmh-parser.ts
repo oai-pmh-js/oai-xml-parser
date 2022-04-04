@@ -1,8 +1,8 @@
 import { X2jOptionsOptional, XMLParser } from 'fast-xml-parser';
-import { IOaiPmhParser, OaiPmhError } from '@oai-pmh-js/oai-pmh';
-import { VerbsAndFields } from '@oai-pmh-js/oai-pmh/dist/type/general';
+import { OaiPmhParserInterface, OaiPmhError } from '@oai-pmh-js/oai-pmh';
+import { VerbsAndFields } from '@oai-pmh-js/oai-pmh/dist/types/general';
 
-export class OaiPmhParser implements IOaiPmhParser {
+export class OaiPmhParser implements OaiPmhParserInterface {
   private readonly parserOptions: X2jOptionsOptional = {
     ignoreAttributes: false,
     parseAttributeValue: false,
