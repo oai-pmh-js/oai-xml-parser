@@ -6,9 +6,8 @@
     "declaration": true,
     "strict": true,
     "newLine": "lf",
-    "target": "es2021",
-    "outDir": "./dist",
-    "allowSyntheticDefaultImports": true
+    "target": "es2022",
+    "outDir": "./dist"
   },
   "include": ["./src"]
 }
