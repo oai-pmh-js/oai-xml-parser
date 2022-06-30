@@ -1,6 +1,6 @@
 import { X2jOptionsOptional, XMLParser } from 'fast-xml-parser';
 import { OaiPmhParserInterface, OaiPmhError } from '@oai-pmh-js/oai-pmh';
-import { VerbsAndFields } from '@oai-pmh-js/oai-pmh/dist/types/general';
+import { VerbsAndFieldsForList } from '@oai-pmh-js/oai-pmh/dist/model/general';
 
 export class OaiPmhParser implements OaiPmhParserInterface {
   private readonly parserOptions: X2jOptionsOptional = {
@@ -56,10 +56,10 @@ export class OaiPmhParser implements OaiPmhParserInterface {
     return obj.GetRecord.record;
   }
 
-  public *ParseList<T extends keyof VerbsAndFields>(
+  public *ParseList<T extends keyof VerbsAndFieldsForList>(
     obj: any,
     verb: T,
-    field: VerbsAndFields[T],
+    field: VerbsAndFieldsForList[T],
   ) {
     if (obj[verb])
       for (const item of Array.isArray(obj[verb]?.[field])
