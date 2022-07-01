@@ -24,11 +24,18 @@ export class OaiPmhParser implements OaiPmhParserInterface {
     this.xmlParser = new XMLParser(this.parserOptions);
   }
 
-  public GetResumptionToken(result: any): string | null {
-    return result.resumptionToken?.['#text'] ?? result.resumptionToken ?? null;
+  public parseResumptionToken(
+    value: any,
+    verb: keyof VerbsAndFieldsForList,
+  ): string | null {
+    return (
+      value[verb].resumptionToken?.['#text'] ??
+      value[verb].resumptionToken ??
+      null
+    );
   }
 
-  public ParseOaiPmhXml(xml: string) {
+  public parseOaiPmhXml(xml: string) {
     const obj = this.xmlParser.parse(xml);
     const oaiPmh = obj['OAI-PMH'];
     if (!oaiPmh)
@@ -44,27 +51,25 @@ export class OaiPmhParser implements OaiPmhParserInterface {
     return oaiPmh;
   }
 
-  public ParseIdentify(obj: any) {
-    return obj.Identify;
+  public parseIdentify(value: any) {
+    return value.Identify;
   }
 
-  public ParseMetadataFormats(obj: any) {
-    return obj.ListMetadataFormats.metadataFormat;
+  public parseMetadataFormats(value: any) {
+    return value.ListMetadataFormats.metadataFormat;
   }
 
-  public ParseRecord(obj: any) {
-    return obj.GetRecord.record;
+  public parseRecord(value: any) {
+    return value.GetRecord.record;
   }
 
-  public *ParseList<T extends keyof VerbsAndFieldsForList>(
-    obj: any,
-    verb: T,
-    field: VerbsAndFieldsForList[T],
-  ) {
-    if (obj[verb])
-      for (const item of Array.isArray(obj[verb]?.[field])
-        ? obj[verb][field]
-        : [obj[verb]?.[field]])
+  public *parseList<
+    T extends keyof VerbsAndFieldsForList = keyof VerbsAndFieldsForList,
+  >(value: any, verb: T, field: VerbsAndFieldsForList[T]) {
+    if (value[verb])
+      for (const item of Array.isArray(value[verb]?.[field])
+        ? value[verb][field]
+        : [value[verb]?.[field]])
         yield item;
   }
 }
